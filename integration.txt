@@ -1,0 +1,76 @@
+jenkins-pipeline automation
+add and commit the files in your new github repository
+load jenkins - create a new job as devops-automation 
+select pipeline
+mark github project and paste the url of the github repository
+build trigger - mark github hook trigger in git scm  
+build pipeline by mentioning below script
+pipeline{
+    agent any
+    tools{
+        maven 'maven_3_9_4'
+        
+    }
+    stages{
+        stage('Build maven'){
+        steps{
+            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Entityismyname/devops-automation']])
+            sh 'mvn clean install'
+        }
+    }
+}
+}
+
+create a file named as dockerfile in devops-automation
+write
+from openjdk:8
+EXPOSE 8080
+ADD target/devops-integration.jar devops-integration.jar
+ENTRYPOINT ["jar","-jar","/devops-integration.jar"
+
+
+specify the jar name in pom.xml define <finalName>devops-inegration</finalName>   under the  </plugins>
+
+
+test that in the maven 
+
+and commit those changes
+give the stage as build docker image in pipeline
+give script in pipeline
+
+stage('Build docker image'){
+steps{
+script{
+sh 'docker-build -t alias_name/image_name'
+}
+}
+}
+
+
+save it and build it
+
+
+start the docker:
+
+
+Jenkins Pipeline:
+
+stages('push images to hub'){
+steps{
+script{
+
+//click on pipeline syntax and select with credential and select secret text in binding and 
+give the variable name and add credential and select secret text(password) and give the name select credentials and generate pipeline script
+copy the generated pipeline script and add 
+
+//generated pipeline
+sh 'docker login -u username -p ${'variable'}
+
+sh 'docker push alias/imagename'
+
+
+}
+}
+}
+
+save it and run it after signing into the docker hub
